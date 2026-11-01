@@ -1,0 +1,4 @@
+nmos_off: Id(T) increases monotonic: True; Id vs |vth0| decreases monotonic: True
+pmos_off: Id(T) increases monotonic: True; Id vs |vth0| decreases monotonic: True
+nmos_on: |Ig| vs toxe decreases monotonic: True
+pmos_on: |Ig| vs toxe decreases monotonic: True
