@@ -1,0 +1,11 @@
+single NMOS ON
+.options gmin=1e-18 abstol=1e-18 reltol=1e-6 vntol=1e-9
+.param vth0_n=0.3770415109 toxe_n=7.395690179e-10 ndep_n=8.851364171e+18 u0_n=0.02542630094 xj_n=1.015516772e-08 vth0_p=-0.24123 toxe_p=7.7e-10 ndep_p=3.5e+18 u0_p=0.00306 xj_p=1.008e-08
+.include "../models/32nm_MGK_param.pm"
+.temp 58.8363
+M1 d g s b nmos W=6.90726e-08 L=3.2e-08 AD=4.42065e-15 AS=4.42065e-15 PD=2.66145e-07 PS=2.66145e-07
+Vd d 0 dc 0.2859163942
+Vg g 0 dc 0.9316496408
+Vs s 0 dc 0.06792913184
+Vb b 0 dc 0
+.op

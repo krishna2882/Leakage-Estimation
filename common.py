@@ -11,6 +11,7 @@ from multiprocessing import Pool
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 MODEL = os.path.join(ROOT, "models", "32nm_MGK_param.pm")   # parametrised copy of 32nm_MGK.pm
+REL_MODEL = "../models/32nm_MGK_param.pm"                   # path used in the saved example netlists
 TAG = os.environ.get("DVD_TAG", "")          # e.g. "_40k" -> separate data/results folders
 DATA = os.path.join(ROOT, "data" + TAG)
 RES = os.path.join(ROOT, "results" + TAG)
