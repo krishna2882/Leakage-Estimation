@@ -1,0 +1,11 @@
+INV 0
+.options gmin=1e-18 abstol=1e-18 reltol=1e-6 vntol=1e-9
+.param vth0_n=0.3810648278 toxe_n=7.597664145e-10 ndep_n=8.967842941e+18 u0_n=0.02578576169 xj_n=9.104915312e-09 vth0_p=-0.2600369801 toxe_p=8.119206997e-10 ndep_p=3.741391946e+18 u0_p=0.002861798766 xj_p=1.096894151e-08
+.include "../models/32nm_MGK_param.pm"
+.temp -36.126707
+MPI out A vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+MNI out A 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Vdd vdd 0 dc 0.8829678083
+VA A 0 dc 0
+.nodeset v(out)=0.882968
+.op
