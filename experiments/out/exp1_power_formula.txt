@@ -1,0 +1,19 @@
+INV   0: last corner spice 3.5581e-08 A, power-formula 3.5581e-08 A, max rel diff over 5 corners 4.23e-10
+INV   1: last corner spice 6.6705e-08 A, power-formula 6.6705e-08 A, max rel diff over 5 corners 2.17e-08
+NAND2 00: last corner spice 5.0264e-08 A, power-formula 5.0264e-08 A, max rel diff over 5 corners 1.02e-09
+NAND2 01: last corner spice 6.9944e-08 A, power-formula 6.9944e-08 A, max rel diff over 5 corners 1.32e-08
+NAND2 10: last corner spice 3.7125e-08 A, power-formula 3.7125e-08 A, max rel diff over 5 corners 2.75e-08
+NAND2 11: last corner spice 1.5271e-07 A, power-formula 1.5271e-07 A, max rel diff over 5 corners 1.03e-08
+NOR2  00: last corner spice 1.1804e-07 A, power-formula 1.1804e-07 A, max rel diff over 5 corners 4.25e-10
+NOR2  01: last corner spice 1.7422e-07 A, power-formula 1.7422e-07 A, max rel diff over 5 corners 1.66e-09
+NOR2  10: last corner spice 8.5783e-08 A, power-formula 8.5783e-08 A, max rel diff over 5 corners 9.45e-09
+NOR2  11: last corner spice 3.2004e-08 A, power-formula 3.2004e-08 A, max rel diff over 5 corners 1.15e-08
+AND2  00: last corner spice 1.1709e-07 A, power-formula 1.1709e-07 A, max rel diff over 5 corners 2.30e-08
+AND2  01: last corner spice 1.3697e-07 A, power-formula 1.3697e-07 A, max rel diff over 5 corners 6.97e-09
+AND2  10: last corner spice 1.0406e-07 A, power-formula 1.0406e-07 A, max rel diff over 5 corners 1.69e-08
+AND2  11: last corner spice 1.8834e-07 A, power-formula 1.8834e-07 A, max rel diff over 5 corners 6.40e-09
+OR2   00: last corner spice 1.8521e-07 A, power-formula 1.8521e-07 A, max rel diff over 5 corners 1.19e-08
+OR2   01: last corner spice 2.0984e-07 A, power-formula 2.0984e-07 A, max rel diff over 5 corners 1.74e-09
+OR2   10: last corner spice 1.2141e-07 A, power-formula 1.2141e-07 A, max rel diff over 5 corners 2.94e-09
+OR2   11: last corner spice 6.7595e-08 A, power-formula 6.7595e-08 A, max rel diff over 5 corners 7.61e-09
+WORST rel diff: 2.750145022238859e-08
