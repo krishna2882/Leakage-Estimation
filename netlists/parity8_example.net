@@ -1,0 +1,162 @@
+parity8 00000000
+.options gmin=1e-18 abstol=1e-18 reltol=1e-6 vntol=1e-9
+.param vth0_n=0.3810648278 toxe_n=7.597664145e-10 ndep_n=8.967842941e+18 u0_n=0.02578576169 xj_n=9.104915312e-09 vth0_p=-0.2600369801 toxe_p=8.119206997e-10 ndep_p=3.741391946e+18 u0_p=0.002861798766 xj_p=1.096894151e-08
+.include "../models/32nm_MGK_param.pm"
+.temp -36.126707
+Mg0o_P1 g0o_y in0 vdd vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg0o_P2 g0o_n in1 g0o_y vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg0o_N1 g0o_n in0 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg0o_N2 g0o_n in1 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg0o_PI x0_or g0o_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0o_NI x0_or g0o_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg0n_P1 x0_nd in0 vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0n_P2 x0_nd in1 vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0n_N1 x0_nd in0 g0n_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0n_N2 g0n_x in1 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0a_P1 g0a_n x0_or vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0a_P2 g0a_n x0_nd vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0a_N1 g0a_n x0_or g0a_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0a_N2 g0a_x x0_nd 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0a_PI x0_o g0a_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg0a_NI x0_o g0a_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg1o_P1 g1o_y in2 vdd vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg1o_P2 g1o_n in3 g1o_y vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg1o_N1 g1o_n in2 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg1o_N2 g1o_n in3 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg1o_PI x1_or g1o_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1o_NI x1_or g1o_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg1n_P1 x1_nd in2 vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1n_P2 x1_nd in3 vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1n_N1 x1_nd in2 g1n_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1n_N2 g1n_x in3 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1a_P1 g1a_n x1_or vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1a_P2 g1a_n x1_nd vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1a_N1 g1a_n x1_or g1a_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1a_N2 g1a_x x1_nd 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1a_PI x1_o g1a_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg1a_NI x1_o g1a_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg2o_P1 g2o_y in4 vdd vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg2o_P2 g2o_n in5 g2o_y vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg2o_N1 g2o_n in4 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg2o_N2 g2o_n in5 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg2o_PI x2_or g2o_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2o_NI x2_or g2o_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg2n_P1 x2_nd in4 vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2n_P2 x2_nd in5 vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2n_N1 x2_nd in4 g2n_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2n_N2 g2n_x in5 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2a_P1 g2a_n x2_or vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2a_P2 g2a_n x2_nd vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2a_N1 g2a_n x2_or g2a_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2a_N2 g2a_x x2_nd 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2a_PI x2_o g2a_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg2a_NI x2_o g2a_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg3o_P1 g3o_y in6 vdd vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg3o_P2 g3o_n in7 g3o_y vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg3o_N1 g3o_n in6 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg3o_N2 g3o_n in7 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg3o_PI x3_or g3o_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3o_NI x3_or g3o_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg3n_P1 x3_nd in6 vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3n_P2 x3_nd in7 vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3n_N1 x3_nd in6 g3n_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3n_N2 g3n_x in7 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3a_P1 g3a_n x3_or vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3a_P2 g3a_n x3_nd vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3a_N1 g3a_n x3_or g3a_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3a_N2 g3a_x x3_nd 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3a_PI x3_o g3a_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg3a_NI x3_o g3a_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg4o_P1 g4o_y x0_o vdd vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg4o_P2 g4o_n x1_o g4o_y vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg4o_N1 g4o_n x0_o 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg4o_N2 g4o_n x1_o 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg4o_PI x4_or g4o_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4o_NI x4_or g4o_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg4n_P1 x4_nd x0_o vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4n_P2 x4_nd x1_o vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4n_N1 x4_nd x0_o g4n_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4n_N2 g4n_x x1_o 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4a_P1 g4a_n x4_or vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4a_P2 g4a_n x4_nd vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4a_N1 g4a_n x4_or g4a_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4a_N2 g4a_x x4_nd 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4a_PI x4_o g4a_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg4a_NI x4_o g4a_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg5o_P1 g5o_y x2_o vdd vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg5o_P2 g5o_n x3_o g5o_y vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg5o_N1 g5o_n x2_o 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg5o_N2 g5o_n x3_o 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg5o_PI x5_or g5o_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5o_NI x5_or g5o_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg5n_P1 x5_nd x2_o vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5n_P2 x5_nd x3_o vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5n_N1 x5_nd x2_o g5n_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5n_N2 g5n_x x3_o 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5a_P1 g5a_n x5_or vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5a_P2 g5a_n x5_nd vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5a_N1 g5a_n x5_or g5a_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5a_N2 g5a_x x5_nd 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5a_PI x5_o g5a_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg5a_NI x5_o g5a_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg6o_P1 g6o_y x4_o vdd vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg6o_P2 g6o_n x5_o g6o_y vdd pmos W=2.56e-07 L=3.2e-08 AD=1.6384e-14 AS=1.6384e-14 PD=6.4e-07 PS=6.4e-07
+Mg6o_N1 g6o_n x4_o 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg6o_N2 g6o_n x5_o 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg6o_PI x6_or g6o_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6o_NI x6_or g6o_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Mg6n_P1 x6_nd x4_o vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6n_P2 x6_nd x5_o vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6n_N1 x6_nd x4_o g6n_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6n_N2 g6n_x x5_o 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6a_P1 g6a_n x6_or vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6a_P2 g6a_n x6_nd vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6a_N1 g6a_n x6_or g6a_x 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6a_N2 g6a_x x6_nd 0 0 nmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6a_PI out g6a_n vdd vdd pmos W=1.28e-07 L=3.2e-08 AD=8.192e-15 AS=8.192e-15 PD=3.84e-07 PS=3.84e-07
+Mg6a_NI out g6a_n 0 0 nmos W=6.4e-08 L=3.2e-08 AD=4.096e-15 AS=4.096e-15 PD=2.56e-07 PS=2.56e-07
+Vdd vdd 0 dc 0.8829678083
+Vi0 in0 0 dc 0
+Vi1 in1 0 dc 0
+Vi2 in2 0 dc 0
+Vi3 in3 0 dc 0
+Vi4 in4 0 dc 0
+Vi5 in5 0 dc 0
+Vi6 in6 0 dc 0
+Vi7 in7 0 dc 0
+.nodeset v(x0_or)=0
+.nodeset v(g0o_n)=0.882968
+.nodeset v(x0_nd)=0.882968
+.nodeset v(x0_o)=0
+.nodeset v(g0a_n)=0.882968
+.nodeset v(x1_or)=0
+.nodeset v(g1o_n)=0.882968
+.nodeset v(x1_nd)=0.882968
+.nodeset v(x1_o)=0
+.nodeset v(g1a_n)=0.882968
+.nodeset v(x2_or)=0
+.nodeset v(g2o_n)=0.882968
+.nodeset v(x2_nd)=0.882968
+.nodeset v(x2_o)=0
+.nodeset v(g2a_n)=0.882968
+.nodeset v(x3_or)=0
+.nodeset v(g3o_n)=0.882968
+.nodeset v(x3_nd)=0.882968
+.nodeset v(x3_o)=0
+.nodeset v(g3a_n)=0.882968
+.nodeset v(x4_or)=0
+.nodeset v(g4o_n)=0.882968
+.nodeset v(x4_nd)=0.882968
+.nodeset v(x4_o)=0
+.nodeset v(g4a_n)=0.882968
+.nodeset v(x5_or)=0
+.nodeset v(g5o_n)=0.882968
+.nodeset v(x5_nd)=0.882968
+.nodeset v(x5_o)=0
+.nodeset v(g5a_n)=0.882968
+.nodeset v(x6_or)=0
+.nodeset v(g6o_n)=0.882968
+.nodeset v(x6_nd)=0.882968
+.nodeset v(out)=0
+.nodeset v(g6a_n)=0.882968
+.op
