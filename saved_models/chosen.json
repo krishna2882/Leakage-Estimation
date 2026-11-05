@@ -1,1 +1,1 @@
-{"nmos_on": "grad_boost", "nmos_off": "mlp", "pmos_on": "grad_boost", "pmos_off": "random_forest"}
+{"nmos_on": "mlp", "nmos_off": "mlp", "pmos_on": "mlp", "pmos_off": "mlp"}
