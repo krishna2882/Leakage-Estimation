@@ -1,0 +1,97 @@
+== Device level (test sets): relative error % by region of |Vd-Vs|/VDD (pooled over id,ig,is,ib)
+nmos_on   |Vds|/VDD in [0.00,0.05): n= 144 median    1.21%  p95   192.59%  (Id,Is only: median 2.92%, p95 830.37%)
+nmos_on   |Vds|/VDD in [0.05,0.30): n= 609 median    0.28%  p95     3.84%  (Id,Is only: median 0.31%, p95 4.31%)
+nmos_on   |Vds|/VDD in [0.30,1.01): n= 747 median    0.17%  p95     0.80%  (Id,Is only: median 0.19%, p95 0.70%)
+nmos_on   Spearman(median err over id,ig,is ; temp) = -0.051
+nmos_on   Spearman(median err over id,ig,is ; |vth0|) = -0.004
+nmos_off  |Vds|/VDD in [0.00,0.05): n= 158 median    0.27%  p95    13.92%  (Id,Is only: median 0.47%, p95 64.47%)
+nmos_off  |Vds|/VDD in [0.05,0.30): n= 603 median    0.20%  p95     1.66%  (Id,Is only: median 0.33%, p95 2.21%)
+nmos_off  |Vds|/VDD in [0.30,1.01): n= 739 median    0.27%  p95     2.74%  (Id,Is only: median 0.47%, p95 4.15%)
+nmos_off  Spearman(median err over id,ig,is ; temp) = +0.132
+nmos_off  Spearman(median err over id,ig,is ; |vth0|) = -0.048
+pmos_on   |Vds|/VDD in [0.00,0.05): n= 148 median    0.82%  p95    88.84%  (Id,Is only: median 1.18%, p95 169.77%)
+pmos_on   |Vds|/VDD in [0.05,0.30): n= 623 median    0.24%  p95     4.10%  (Id,Is only: median 0.25%, p95 2.26%)
+pmos_on   |Vds|/VDD in [0.30,1.01): n= 729 median    0.14%  p95     0.64%  (Id,Is only: median 0.14%, p95 0.57%)
+pmos_on   Spearman(median err over id,ig,is ; temp) = -0.081
+pmos_on   Spearman(median err over id,ig,is ; |vth0|) = -0.008
+pmos_off  |Vds|/VDD in [0.00,0.05): n= 144 median    1.28%  p95    37.51%  (Id,Is only: median 1.80%, p95 76.30%)
+pmos_off  |Vds|/VDD in [0.05,0.30): n= 612 median    0.95%  p95     6.50%  (Id,Is only: median 1.34%, p95 9.36%)
+pmos_off  |Vds|/VDD in [0.30,1.01): n= 744 median    1.13%  p95     9.11%  (Id,Is only: median 1.83%, p95 14.36%)
+pmos_off  Spearman(median err over id,ig,is ; temp) = -0.242
+pmos_off  Spearman(median err over id,ig,is ; |vth0|) = +0.020
+
+== Gate level: Spearman(|err|, parameter)
+  temp       rho = -0.045   (signed err: -0.026)
+  vdd        rho = +0.175   (signed err: +0.079)
+  vth0_n     rho = -0.009   (signed err: -0.084)
+  vth0_p_abs rho = -0.071   (signed err: +0.086)
+  toxe_n     rho = +0.148   (signed err: -0.174)
+  toxe_p     rho = +0.065   (signed err: -0.227)
+  u0_n       rho = -0.014   (signed err: -0.010)
+  u0_p       rho = -0.016   (signed err: +0.078)
+  ndep_n     rho = +0.018   (signed err: -0.001)
+  ndep_p     rho = -0.052   (signed err: +0.017)
+  xj_n       rho = -0.005   (signed err: +0.025)
+  xj_p       rho = -0.008   (signed err: +0.064)
+== Gate level: |err| % by temperature quintile
+                   median    p95
+tbin                            
+(-37.57, -1.236]    1.202  5.016
+(-1.236, 22.555]    0.942  5.057
+(22.555, 54.076]    1.222  5.808
+(54.076, 90.532]    1.102  5.596
+(90.532, 124.827]   0.973  4.200
+== Gate level: worst 8 rows
+      gate pattern  corner        temp       vdd         spice            ml        err
+1571  NOR2      01     171   70.704368  0.818614  2.319354e-07  2.016213e-07 -13.070063
+1501  NOR2      01     101  114.474119  0.974839  4.457799e-07  5.012883e-07  12.451972
+1818  NOR2      11      18   92.393490  0.988256  9.740689e-08  1.095070e-07  12.422255
+204    INV       1       4   42.034284  0.986133  6.670521e-08  5.843664e-08 -12.395702
+1901  NOR2      11     101  114.474119  0.974839  9.933387e-08  1.115027e-07  12.250446
+1734  NOR2      10     134  -36.187723  0.846844  6.480399e-08  7.261544e-08  12.053959
+1771  NOR2      10     171   70.704368  0.818614  1.578956e-07  1.394072e-07 -11.709256
+341    INV       1     141   64.442890  0.947318  7.507192e-08  6.651494e-08 -11.398374
+
+== Circuit level: Spearman(|err|, parameter)
+  temp       rho = +0.053   (signed err: -0.201)
+  vdd        rho = +0.178   (signed err: +0.043)
+  vth0_n     rho = +0.005   (signed err: -0.108)
+  vth0_p_abs rho = -0.149   (signed err: +0.106)
+  toxe_n     rho = +0.233   (signed err: -0.313)
+  toxe_p     rho = +0.221   (signed err: -0.386)
+  u0_n       rho = +0.003   (signed err: -0.005)
+  u0_p       rho = -0.010   (signed err: +0.076)
+  ndep_n     rho = -0.042   (signed err: -0.007)
+  ndep_p     rho = -0.030   (signed err: +0.068)
+  xj_n       rho = +0.002   (signed err: +0.051)
+  xj_p       rho = -0.058   (signed err: +0.095)
+== Circuit level: |err| % by temperature quintile
+                   median    p95
+tbin                            
+(-37.57, -1.236]    0.906  2.875
+(-1.236, 22.555]    0.875  4.043
+(22.555, 54.076]    1.526  4.967
+(54.076, 90.532]    1.386  5.130
+(90.532, 124.827]   0.838  2.939
+== Circuit level: worst 8 rows
+       vec  corner       temp       vdd     spice        ml       err
+34804  174       4  42.034284  0.986133  0.000003  0.000002 -8.202014
+22004  110       4  42.034284  0.986133  0.000003  0.000003 -8.193822
+34604  173       4  42.034284  0.986133  0.000003  0.000003 -8.193822
+31604  158       4  42.034284  0.986133  0.000003  0.000003 -8.193821
+34204  171       4  42.034284  0.986133  0.000003  0.000002 -8.191647
+46804  234       4  42.034284  0.986133  0.000003  0.000002 -8.191647
+21804  109       4  42.034284  0.986133  0.000003  0.000003 -8.186321
+18804   94       4  42.034284  0.986133  0.000003  0.000003 -8.186321
+
+== Device models at the bias points used inside the gates (SPICE single-FET reruns)
+nmos_off  n= 4200  power-term error: median 1.335%  p95 5.35%  bias -0.195%   | Ig error median 0.701%
+nmos_on   n= 4200  power-term error: median 1.110%  p95 7.14%  bias +0.020%   | Ig error median 1.050%
+pmos_off  n= 4200  power-term error: median 3.203%  p95 14.19%  bias -0.838%   | Ig error median 2.008%
+pmos_on   n= 4200  power-term error: median 0.971%  p95 3.89%  bias +0.192%   | Ig error median 1.004%
+
+== Attribution (gate level): ML everywhere -> median |err| 1.089%, p95 5.24%
+   with exact SPICE currents for nmos_on  : median |err| 1.003%, p95 5.20%
+   with exact SPICE currents for nmos_off : median |err| 0.884%, p95 5.04%
+   with exact SPICE currents for pmos_on  : median |err| 0.969%, p95 5.30%
+   with exact SPICE currents for pmos_off : median |err| 0.494%, p95 2.12%
