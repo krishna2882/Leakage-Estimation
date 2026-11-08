@@ -4,11 +4,12 @@
 cd "$(dirname "$0")/.."
 FROM=${1:-1}
 TO=${2:-5}            # optional last tier; DVD_TAG / DVD_N from the environment select a variant run
-# tier 6 (main run only): dataset-size study over all finished runs, then the requirement check (exit 1 = a gap remains)
-T=( "" "00_setup_check 01_gen_data 02_data_check" "03_train_models" "04_gate_spice 05_gate_ml" "06_circuit_spice 07_circuit_ml" "08_error_analysis 09_report" "11_learning_curve 10_verify_requirements" )
-N=( "" t1_data t2_train t3_gates t4_circuit t5_report t6_verify )
-# dataset-size runs reuse the main run's circuit SPICE reference (same corners) and need no report of their own
-[ -n "$DVD_TAG" ] && T[4]="07_circuit_ml" && T[5]="08_error_analysis"
+# tier 6 (main run only, after the size runs have finished): dataset-size study over all finished runs, the report
+# (which reads the learning curve and the headline run), then the requirement check (exit 1 = a gap remains)
+T=( "" "00_setup_check 01_gen_data 02_data_check" "03_train_models" "04_gate_spice 05_gate_ml" "06_circuit_spice 07_circuit_ml" "08_error_analysis" "11_learning_curve 09_report 10_verify_requirements" )
+N=( "" t1_data t2_train t3_gates t4_circuit t5_analysis t6_report )
+# dataset-size runs reuse the main run's circuit SPICE reference (same corners)
+[ -n "$DVD_TAG" ] && T[4]="07_circuit_ml"
 dep=""
 for i in $(seq $FROM $TO); do
   a="--parsable -J ${N[$i]}${DVD_TAG} -c 4 --mem=8000"

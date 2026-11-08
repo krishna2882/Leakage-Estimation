@@ -15,22 +15,33 @@ Assignment: **32nm_MGK** model file, nominal **VDD = 0.9 V**, test circuit **8-b
 | `06_circuit_spice.py` | 4 | full parity-checker SPICE, 256 vectors x 200 corners |
 | `07_circuit_ml.py` | 4 | hierarchical ML estimate, circuit metrics, parity plot |
 | `08_error_analysis.py` | 5 | where the errors are and correlations with T / VDD / process |
-| `09_report.py` | 5 | `report.md` assembled from the result files |
-| `12_report_pdf.py` | 5 | `report.pdf` rendered from `report.md` (run locally after syncing down: needs Chrome/Chromium and `pip install markdown`) |
-| `11_learning_curve.py` | 6 | dataset-size study: device and gate accuracy at 2.5k / 5k / 10k / 20k / 40k samples per case |
+| `11_learning_curve.py` | 6 | dataset-size study: device, gate and circuit accuracy at 2.5k / 5k / 10k / 20k / 40k samples per case |
+| `09_report.py` | 6 | `report.md` assembled from the result files (needs the learning curve and the 40k run) |
 | `10_verify_requirements.py` | 6 | automated check of every spec requirement, `results/10_requirements_check.txt` |
+| `12_report_pdf.py` | local | `report.pdf` rendered from `report.md` (after syncing down: needs Chrome/Chromium and `pip install markdown`) |
 
 All heavy work runs on the Ada cluster (`ada/`): `run_all.sh` runs any subset of stages (`STAGES="..."`),
 `ada/submit_chain.sh FROM TO` submits tiers FROM..TO as a SLURM dependency chain (each tier starts only if the
-previous one succeeded). Dataset-size runs: `DVD_TAG=_20k DVD_N=20000 ada/submit_chain.sh 1 3` writes to
-`data_20k/`, `results_20k/`, ... and leaves the main run untouched; tiers 4-5 of a size run (`... submit_chain.sh 4 5`) run the
-circuit estimate against the main run's circuit SPICE reference (same corners) and the error analysis.
+previous one succeeded). One-time environment (ngspice bundle and Python venv next to the project, outside this repo):
+`ada/setup_env.md`. Dataset-size runs (`DVD_TAG`, `DVD_N`) write to `data_<tag>/`, `results_<tag>/`, ... and leave the main run
+untouched; their tier 4 runs only the circuit estimate, against the main run's circuit SPICE reference (same corners).
+
+**Rebuilding everything, in order** (on the Ada gateway; each line after the main run's tiers 1-5 have finished):
+```bash
+ada/submit_chain.sh 1 5                                   # main run, the specified 10,000 samples per case
+DVD_TAG=_2k5 DVD_N=2500 ada/submit_chain.sh 1 3           # dataset-size study (these four can run at the same time)
+DVD_TAG=_5k  DVD_N=5000 ada/submit_chain.sh 1 3
+DVD_TAG=_20k DVD_N=20000 ada/submit_chain.sh 1 3
+DVD_TAG=_40k DVD_N=40000 ada/submit_chain.sh 1 5          # final models (report headline)
+ada/submit_chain.sh 6 6                                   # once all runs above finished: learning curve, report, requirement check
+```
+then `ada/sync_down.sh` and `python3 12_report_pdf.py` on the laptop.
 
 **Final models / report headline:** the 40,000-samples-per-case run (`common.HEADLINE = "_40k"`: `data_40k/`, `saved_models_40k/`,
-`results_40k/`, `plots_40k/`), built with `DVD_TAG=_40k DVD_N=40000 ada/submit_chain.sh 1 5`. The main run keeps the specified
-10,000 samples per case (`data/`, deliverable D1); `report.md` gives both, and `10_verify_requirements.py` checks the 99 % targets
-on the headline run. `experiments/` holds the studies behind the
-design choices (power-based leakage proof, feature/target choices, rail weighting); they are not part of the pipeline.
+`results_40k/`, `plots_40k/`), the first size of the study at which both the gate-level and the parity-checker mean accuracy
+reach 99 %. The main run keeps the specified 10,000 samples per case (`data/`, deliverable D1); `report.md` gives both, and
+`10_verify_requirements.py` checks the 99 % targets on the headline run. `experiments/` holds the studies behind the
+design choices (power-based leakage proof, feature/target choices, rail weighting, pmos_off diagnosis); they are not part of the pipeline.
 
 ## Conventions
 - Terminal currents (`id, ig, is, ib`) are currents **into** the device terminal (ngspice `I(V*)` negated).

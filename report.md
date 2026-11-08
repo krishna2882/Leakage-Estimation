@@ -39,8 +39,10 @@ samples per case. Section 7 shows why: the remaining error is a data (variance) 
   +-10 % around the file's nominal values (separate NMOS and PMOS draws). Vg and Vb are fixed per case: NMOS ON Vg = VDD,
   NMOS OFF Vg = 0, PMOS ON Vg = 0, PMOS OFF Vg = VDD; NMOS body at 0, PMOS body at VDD. Non-converged samples are redrawn.
 - Split: 70 / 15 / 15 (train / validation / test), fixed seed (random_state = 2024).
-- The gate and parity-checker SPICE results (Parts B and C) are used for evaluation only: no training or model-selection script
-  reads them (checked in `results/10_requirements_check.txt`). Model types are chosen on the device validation sets.
+- The gate and parity-checker SPICE results (Parts B and C) are never read by a training or model-selection script (checked in
+  `results/10_requirements_check.txt`); model types are chosen on the device validation sets. Two decisions did look at
+  gate-level results: the dataset size of the final models (section 6), and the bounded drain-bias feature (section 3), which
+  diagnostics at the gate bias points motivated and which was then chosen on an independent single-FET rail-bias set.
 - The final models (section 6) use the same procedure with 40,000 samples per case (`data_40k/`); the dataset-size
   study (section 7) repeats it at 2,500 / 5,000 / 20,000 samples per case.
 
@@ -71,7 +73,7 @@ Controlled sweeps (one parameter varied, all others nominal):
 - Four model types: polynomial ridge regression (degree 2 and 3, RidgeCV), random forest (500 trees), histogram gradient boosting
   (one per terminal, early stopping), and an MLP (4 hidden layers x 128, SiLU, Adam with cosine learning rate for 2000 epochs,
   then L-BFGS, ensemble of 5 seeds, float64).
-- Selection: per model type the best hyper-parameter variant on validation; per case the model type with the smallest
+- Selection: poly_ridge: degree 2 or degree 3, the better on validation per case; grad_boost, mlp, random_forest: one fixed setting each (`results/03_hyperparams.json`); per case the model type with the smallest
   validation (median + 95th percentile) of the pooled relative error. Relative error = |dI| / max(|I_SPICE|, 1 fA).
 
 ### Model comparison (validation set, pooled over Id, Ig, Is, Ib)
@@ -214,9 +216,10 @@ Section 4 sampling and ranges, checked in `results/10_requirements_check.txt`), 
 `results_40k/`, plots `plots_40k/`. The 70/15/15 split, the four model types and the selection rule are the same; the
 gate corners and the full-circuit SPICE reference are identical to the main run, so every number here is directly comparable with
 sections 4 and 5. Chosen model types: nmos_on mlp, nmos_off mlp, pmos_on mlp, pmos_off mlp.
-The size is chosen by the same rule as the model types, on the device validation sets: the best validation median error falls
-with every doubling for all four cases and is lowest at 40,000 samples per case, the largest size run (table in section 7).
 
+How this size was chosen: it is the first size of the dataset-size study (section 7) at which both the gate-level and the parity-checker mean accuracy reach 99 % (40,000 samples per case; sizes between 20,000 and 40,000 were not tested). The device validation error also falls with every doubling of the data (section 7). So this choice used the gate and circuit SPICE results (as noted in section 2); the
+model types, hyper-parameters and trained weights come from the same procedure as in sections 2-5 and never see them. For that
+reason the specified 10,000-sample results are reported alongside.
 
 ### Chosen models (test set)
 | case | chosen model | id median % | id p95 % | ig median % | ig p95 % | is median % | is p95 % | ib median % | ib p95 % | pooled median % | pooled p95 % | pooled_\|Vds\|>5%VDD median % | pooled_\|Vds\|>5%VDD p95 % | predicted KCL residual (median) |
@@ -458,7 +461,7 @@ the models):
 
 Factor by which the device test median error changes per doubling of the data: nmos_on 0.48-0.62; nmos_off 0.54-0.63; pmos_on 0.45-0.67; pmos_off 0.54-0.81. Every device error falls with every doubling and the gate and circuit errors follow, so the remaining error is mainly a data (variance) limit, not a model-form limit. Of the sizes tested (2,500, 5,000, 10,000, 20,000, 40,000 samples per case), the smallest that reaches 99 % mean accuracy is 40,000 at gate level and 20,000 for the parity checker.
 
-Best device validation median error (%) per size, the basis for the size of the final models (section 6):
+Best device validation median error (%) per size:
 
 | samples_per_case | nmos_on_val_median_pct | nmos_off_val_median_pct | pmos_on_val_median_pct | pmos_off_val_median_pct |
 |---|---|---|---|---|

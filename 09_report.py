@@ -1,5 +1,6 @@
 """Tier 5b: assemble report.md (all numbers read from result files; optional studies are included when present)."""
 import json
+import re
 import pandas as pd
 from common import *
 
@@ -49,6 +50,14 @@ for c in CASES:
     R.append(f"- {c}: **{ch[c]}**, validation median {s.loc[w, f'{c} median %']:.3f} % / p95 {s.loc[w, f'{c} p95 %']:.2f} % "
              f"against the runner-up {r2} ({s.loc[r2, f'{c} median %']:.3f} % / {s.loc[r2, f'{c} p95 %']:.2f} %).")
 reasons = "Selection rule: smallest validation (median + p95) pooled error. Per case:\n" + "\n".join(R)
+# which model types actually had more than one hyper-parameter setting to choose from (03_hyperparams.json)
+hpj = json.load(open(os.path.join(RES, "03_hyperparams.json")))
+nvar = {k.split("'")[3]: len(v) for k, v in hpj.items() if not k.endswith("'best')")}
+tuned = sorted(t for t, n in nvar.items() if n > 1); fixed = sorted(t for t, n in nvar.items() if n == 1)
+hp_txt = lambda t: " or ".join(sorted({re.sub(r"[{}']", "", h["hp"]).replace(":", "") for k, v in hpj.items()
+                                       if not k.endswith("'best')") and f"'{t}'" in k for h in v}))
+tuned_note = "; ".join([f"{t}: {hp_txt(t)}, the better on validation per case" for t in tuned] +
+                       [f"{', '.join(fixed)}: one fixed setting each (`results/03_hyperparams.json`)"])
 e7 = [os.path.join(ROOT, "experiments", "out", f"exp7_{c}.csv") for c in CASES]
 feat_note = ""
 if all(os.path.exists(f) for f in e7):
@@ -89,6 +98,21 @@ h_dev, h_gt, h_go, h_co = hcsv("03_chosen_models_test.csv"), hcsv("05_gate_table
     hcsv("05_gate_overall.csv"), hcsv("07_circuit_overall.csv")
 h_hw, h_att, h_sc = hcsv("07_circuit_by_hamming_weight.csv"), hcsv("08_error_attribution.csv"), hcsv("05_gate_overall_selfconsistent.csv")
 HEAD = h_dev is not None and h_gt is not None and h_go is not None and h_co is not None and not TAG
+# the honest basis for the headline size: the first size of the study at which both accuracy targets are met
+size_basis = "see the dataset-size study in section 7."
+if lc is not None and "circuit_mean_accuracy_pct" in lc:
+    both = lc[(lc.gate_mean_accuracy_pct >= 99) & (lc.circuit_mean_accuracy_pct >= 99)].samples_per_case
+    if len(both):
+        size_basis = (f"it is the first size of the dataset-size study (section 7) at which both the gate-level and the "
+                      f"parity-checker mean accuracy reach 99 % ({int(both.min()):,} samples per case")
+        below = lc.samples_per_case[lc.samples_per_case < both.min()]
+        size_basis += (f"; sizes between {int(below.max()):,} and {int(both.min()):,} were not tested)." if len(below) else ").")
+        if int(both.min()) != HEADLINE_N:
+            size_basis += f" **Note: this differs from the headline size {HEADLINE_N:,}.**"
+    else:
+        size_basis = "no size of the study reaches 99 % at both levels."
+    size_basis += (" The device validation error also falls with every doubling of the data (section 7)."
+                   if sval.apply(lambda s: s.is_monotonic_decreasing).all() else "")
 hn = f"{HEADLINE_N:,}"
 spec_line = (f"8-bit parity checker (256 vectors x 200 corners): mean accuracy **{c_ml.mean_accuracy_pct:.2f} %**, median error "
              f"{c_ml.median_err_pct:.2f} %, 95th percentile {c_ml.p95_err_pct:.2f} %.\n"
@@ -142,8 +166,10 @@ A = [f"""# ML-driven PVT-variation-aware leakage estimation - DVD course project
   +-10 % around the file's nominal values (separate NMOS and PMOS draws). Vg and Vb are fixed per case: NMOS ON Vg = VDD,
   NMOS OFF Vg = 0, PMOS ON Vg = 0, PMOS OFF Vg = VDD; NMOS body at 0, PMOS body at VDD. Non-converged samples are redrawn.
 - Split: 70 / 15 / 15 (train / validation / test), fixed seed (random_state = {SEED}).
-- The gate and parity-checker SPICE results (Parts B and C) are used for evaluation only: no training or model-selection script
-  reads them (checked in `results/10_requirements_check.txt`). Model types are chosen on the device validation sets.
+- The gate and parity-checker SPICE results (Parts B and C) are never read by a training or model-selection script (checked in
+  `results/10_requirements_check.txt`); model types are chosen on the device validation sets. Two decisions did look at
+  gate-level results: the dataset size of the final models (section 6), and the bounded drain-bias feature (section 3), which
+  diagnostics at the gate bias points motivated and which was then chosen on an independent single-FET rail-bias set.
 - The final models (section 6) use the same procedure with {HEADLINE_N:,} samples per case (`data{HEADLINE}/`); the dataset-size
   study (section 7) repeats it at 2,500 / 5,000 / 20,000 samples per case.
 
@@ -165,7 +191,7 @@ Controlled sweeps (one parameter varied, all others nominal):
 - Four model types: polynomial ridge regression (degree 2 and 3, RidgeCV), random forest (500 trees), histogram gradient boosting
   (one per terminal, early stopping), and an MLP (4 hidden layers x 128, SiLU, Adam with cosine learning rate for 2000 epochs,
   then L-BFGS, ensemble of 5 seeds, float64).
-- Selection: per model type the best hyper-parameter variant on validation; per case the model type with the smallest
+- Selection: {tuned_note}; per case the model type with the smallest
   validation (median + 95th percentile) of the pooled relative error. Relative error = |dI| / max(|I_SPICE|, 1 fA).
 
 ### Model comparison (validation set, pooled over Id, Ig, Is, Ib)
@@ -236,10 +262,10 @@ Section 4 sampling and ranges, checked in `results/10_requirements_check.txt`), 
 `results{HEADLINE}/`, plots `plots{HEADLINE}/`. The 70/15/15 split, the four model types and the selection rule are the same; the
 gate corners and the full-circuit SPICE reference are identical to the main run, so every number here is directly comparable with
 sections 4 and 5. Chosen model types: {", ".join(f"{c} {k}" for c, k in hch.items())}.
-The size is chosen by the same rule as the model types, on the device validation sets: the best validation median error falls
-with every doubling for all four cases and is lowest at {hn} samples per case, the largest size run (table in section 7).
-""" + ("" if sval.idxmin().eq(HEADLINE_N).all() and sval.apply(lambda s: s.is_monotonic_decreasing).all() else
-       "**Check: the validation error is not lowest at the headline size for every case; revisit this choice.**\n") + f"""
+
+How this size was chosen: {size_basis} So this choice used the gate and circuit SPICE results (as noted in section 2); the
+model types, hyper-parameters and trained weights come from the same procedure as in sections 2-5 and never see them. For that
+reason the specified 10,000-sample results are reported alongside.
 
 ### Chosen models (test set)
 {md(h_dev)}
@@ -350,7 +376,7 @@ Factor by which the device test median error changes per doubling of the data: {
         "data (variance) limit, not a model-form limit." if all((r < 1).all() for r in ratio.values()) else
         "Not every device error falls with every doubling: see the table.") + f""" {reach}
 
-Best device validation median error (%) per size, the basis for the size of the final models (section 6):
+Best device validation median error (%) per size:
 
 {md(sv, "{:.3f}")}
 
