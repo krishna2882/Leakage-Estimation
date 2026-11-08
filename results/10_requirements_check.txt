@@ -1,0 +1,141 @@
+[PASS] D1      nmos_on: exact columns vdd,temp,w,vd,vs,vg,vb,vth0,toxe,ndep,u0,xj,id,ig,is,ib   (['vdd', 'temp', 'w', 'vd', 'vs', 'vg', 'vb', 'vth0', 'toxe', 'ndep', 'u0', 'xj', 'id', 'ig', 'is', 'ib'])
+[PASS] A1      nmos_on: >= 10,000 rows, no NaN   (rows=10000)
+[PASS] S4      nmos_on: VDD uniform within 0.9 V +-10 %   ([0.8101,0.9900])
+[PASS] S4      nmos_on: Vd, Vs within 0..VDD
+[PASS] S4      nmos_on: W within 1..8 Lmin   ([3.203e-08,2.560e-07])
+[PASS] S4      nmos_on: T within -40..125 C   ([-39.99,124.98])
+[PASS] S4      nmos_on: vth0 within nominal +-10 % (NMOS nominal 0.3558)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_on: toxe within nominal +-10 % (NMOS nominal 7.5e-10)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_on: ndep within nominal +-10 % (NMOS nominal 8.7e+18)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_on: u0 within nominal +-10 % (NMOS nominal 0.0238)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_on: xj within nominal +-10 % (NMOS nominal 1e-08)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_on: Vg fixed = vdd, Vb fixed = 0
+[PASS] A1      nmos_on: parameters drawn independently (max |corr| among T,W,process,VDD < 0.05)   (max |corr| = 0.025)
+[PASS] D1      nmos_off: exact columns vdd,temp,w,vd,vs,vg,vb,vth0,toxe,ndep,u0,xj,id,ig,is,ib   (['vdd', 'temp', 'w', 'vd', 'vs', 'vg', 'vb', 'vth0', 'toxe', 'ndep', 'u0', 'xj', 'id', 'ig', 'is', 'ib'])
+[PASS] A1      nmos_off: >= 10,000 rows, no NaN   (rows=10000)
+[PASS] S4      nmos_off: VDD uniform within 0.9 V +-10 %   ([0.8100,0.9899])
+[PASS] S4      nmos_off: Vd, Vs within 0..VDD
+[PASS] S4      nmos_off: W within 1..8 Lmin   ([3.201e-08,2.559e-07])
+[PASS] S4      nmos_off: T within -40..125 C   ([-39.96,124.97])
+[PASS] S4      nmos_off: vth0 within nominal +-10 % (NMOS nominal 0.3558)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_off: toxe within nominal +-10 % (NMOS nominal 7.5e-10)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_off: ndep within nominal +-10 % (NMOS nominal 8.7e+18)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_off: u0 within nominal +-10 % (NMOS nominal 0.0238)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_off: xj within nominal +-10 % (NMOS nominal 1e-08)   (ratio [0.9000,1.1000])
+[PASS] S4      nmos_off: Vg fixed = 0, Vb fixed = 0
+[PASS] A1      nmos_off: parameters drawn independently (max |corr| among T,W,process,VDD < 0.05)   (max |corr| = 0.021)
+[PASS] D1      pmos_on: exact columns vdd,temp,w,vd,vs,vg,vb,vth0,toxe,ndep,u0,xj,id,ig,is,ib   (['vdd', 'temp', 'w', 'vd', 'vs', 'vg', 'vb', 'vth0', 'toxe', 'ndep', 'u0', 'xj', 'id', 'ig', 'is', 'ib'])
+[PASS] A1      pmos_on: >= 10,000 rows, no NaN   (rows=10000)
+[PASS] S4      pmos_on: VDD uniform within 0.9 V +-10 %   ([0.8100,0.9900])
+[PASS] S4      pmos_on: Vd, Vs within 0..VDD
+[PASS] S4      pmos_on: W within 1..8 Lmin   ([3.207e-08,2.560e-07])
+[PASS] S4      pmos_on: T within -40..125 C   ([-39.97,124.99])
+[PASS] S4      pmos_on: vth0 within nominal +-10 % (PMOS nominal -0.24123)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_on: toxe within nominal +-10 % (PMOS nominal 7.7e-10)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_on: ndep within nominal +-10 % (PMOS nominal 3.5e+18)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_on: u0 within nominal +-10 % (PMOS nominal 0.00306)   (ratio [0.9001,1.1000])
+[PASS] S4      pmos_on: xj within nominal +-10 % (PMOS nominal 1.008e-08)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_on: Vg fixed = 0, Vb fixed = vdd
+[PASS] A1      pmos_on: parameters drawn independently (max |corr| among T,W,process,VDD < 0.05)   (max |corr| = 0.016)
+[PASS] D1      pmos_off: exact columns vdd,temp,w,vd,vs,vg,vb,vth0,toxe,ndep,u0,xj,id,ig,is,ib   (['vdd', 'temp', 'w', 'vd', 'vs', 'vg', 'vb', 'vth0', 'toxe', 'ndep', 'u0', 'xj', 'id', 'ig', 'is', 'ib'])
+[PASS] A1      pmos_off: >= 10,000 rows, no NaN   (rows=10000)
+[PASS] S4      pmos_off: VDD uniform within 0.9 V +-10 %   ([0.8100,0.9900])
+[PASS] S4      pmos_off: Vd, Vs within 0..VDD
+[PASS] S4      pmos_off: W within 1..8 Lmin   ([3.200e-08,2.560e-07])
+[PASS] S4      pmos_off: T within -40..125 C   ([-39.99,124.96])
+[PASS] S4      pmos_off: vth0 within nominal +-10 % (PMOS nominal -0.24123)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_off: toxe within nominal +-10 % (PMOS nominal 7.7e-10)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_off: ndep within nominal +-10 % (PMOS nominal 3.5e+18)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_off: u0 within nominal +-10 % (PMOS nominal 0.00306)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_off: xj within nominal +-10 % (PMOS nominal 1.008e-08)   (ratio [0.9000,1.1000])
+[PASS] S4      pmos_off: Vg fixed = vdd, Vb fixed = vdd
+[PASS] A1      pmos_off: parameters drawn independently (max |corr| among T,W,process,VDD < 0.05)   (max |corr| = 0.031)
+[PASS] NET     every saved netlist contains the required .options   (23 netlists)
+[PASS] D2/NET  single_nmos_on.net exists with one source per terminal (d,g,s,b)   (['Vd', 'Vg', 'Vs', 'Vb'])
+[PASS] D2/NET  single_nmos_off.net exists with one source per terminal (d,g,s,b)   (['Vd', 'Vg', 'Vs', 'Vb'])
+[PASS] D2/NET  single_pmos_on.net exists with one source per terminal (d,g,s,b)   (['Vd', 'Vg', 'Vs', 'Vb'])
+[PASS] D2/NET  single_pmos_off.net exists with one source per terminal (d,g,s,b)   (['Vd', 'Vg', 'Vs', 'Vb'])
+[PASS] D2      gate netlist INV_0.net exists
+[PASS] D2      gate netlist INV_1.net exists
+[PASS] D2      gate netlist NAND2_00.net exists
+[PASS] D2      gate netlist NAND2_01.net exists
+[PASS] D2      gate netlist NAND2_10.net exists
+[PASS] D2      gate netlist NAND2_11.net exists
+[PASS] D2      gate netlist NOR2_00.net exists
+[PASS] D2      gate netlist NOR2_01.net exists
+[PASS] D2      gate netlist NOR2_10.net exists
+[PASS] D2      gate netlist NOR2_11.net exists
+[PASS] D2      gate netlist AND2_00.net exists
+[PASS] D2      gate netlist AND2_01.net exists
+[PASS] D2      gate netlist AND2_10.net exists
+[PASS] D2      gate netlist AND2_11.net exists
+[PASS] D2      gate netlist OR2_00.net exists
+[PASS] D2      gate netlist OR2_01.net exists
+[PASS] D2      gate netlist OR2_10.net exists
+[PASS] D2      gate netlist OR2_11.net exists
+[PASS] D2      test-circuit netlist parity8_example.net exists
+[PASS] NET     saved netlists use a portable (relative) model path
+[PASS] D3      Kirchhoff check per case
+[PASS] D3      trend plot trend_off_current_vs_temperature.png
+[PASS] D3      trend plot trend_off_current_vs_vth0.png
+[PASS] D3      trend plot trend_gate_current_vs_toxe.png
+[PASS] D3      all trends physically monotonic (asserted in 02_trends.txt)
+[PASS] D4      model comparison: 4 model types x 4 cases on validation (R2, median, p95)   (16 rows)
+[PASS] D4      formatted comparison table results/03_model_comparison_val.csv
+[PASS] D5      chosen-model test table results/03_chosen_models_test.csv
+[PASS] D5      exactly four saved model files, one per case, matching chosen.json   (['nmos_off_mlp.joblib', 'nmos_on_mlp.joblib', 'pmos_off_mlp.joblib', 'pmos_on_mlp.joblib'])
+[PASS] D5      predicted-vs-SPICE plot for nmos_on
+[PASS] D5      predicted-vs-SPICE plot for nmos_off
+[PASS] D5      predicted-vs-SPICE plot for pmos_on
+[PASS] D5      predicted-vs-SPICE plot for pmos_off
+[PASS] A2      split 70/15/15 with fixed seed (7000/1500/1500)
+[PASS] B3      18 gate/input cases x 200 corners simulated in SPICE   (18 cases, 200-200 corners)
+[PASS] B3      SPICE gate outputs at the correct logic level in all 3600 runs
+[PASS] S5      200 corners: VDD, T, NMOS draw, PMOS draw (separate)
+[PASS] S5      recorded per case: SPICE leakage, ML leakage, SPICE output voltage
+[PASS] S5      internal node voltages recorded from both SPICE and ML (x, y, NAND/NOR output n)
+[PASS] D6      gate table: 18 rows with SPICE median, ML median, bias, median error, p95 error
+[PASS] D7      gate parity plot (log axes)
+[PASS] C6      test circuit: all 256 input vectors x the same 200 corners   (51200 runs)
+[PASS] C6      test circuit output logic correct in every run
+[PASS] D8      test-circuit metrics table
+[PASS] D8      test-circuit parity plot (log axes)
+[PASS] D9      script 00_setup_check.py present
+[PASS] D9      script 01_gen_data.py present
+[PASS] D9      script 02_data_check.py present
+[PASS] D9      script 03_train_models.py present
+[PASS] D9      script 04_gate_spice.py present
+[PASS] D9      script 05_gate_ml.py present
+[PASS] D9      script 06_circuit_spice.py present
+[PASS] D9      script 07_circuit_ml.py present
+[PASS] D9      script 08_error_analysis.py present
+[PASS] D9      script 09_report.py present
+[PASS] D9      fixed seeds (SEED in common.py)
+[PASS] A1      smallest-dataset study (learning curve) present
+[PASS] B3      gate/circuit SPICE results never read by data generation, training or model selection
+[PASS] HEAD    headline run nmos_on: 40,000 rows, same columns and sampling ranges as Section 4   (rows=40000)
+[PASS] HEAD    headline run nmos_off: 40,000 rows, same columns and sampling ranges as Section 4   (rows=40000)
+[PASS] HEAD    headline run pmos_on: 40,000 rows, same columns and sampling ranges as Section 4   (rows=40000)
+[PASS] HEAD    headline run pmos_off: 40,000 rows, same columns and sampling ranges as Section 4   (rows=40000)
+[PASS] HEAD    headline run: four saved model files matching its chosen.json   (['nmos_off_mlp.joblib', 'nmos_on_mlp.joblib', 'pmos_off_mlp.joblib', 'pmos_on_mlp.joblib'])
+[PASS] HEAD    headline run uses the same 200 gate corners as the main run
+[PASS] HEAD    headline run table 03_chosen_models_test.csv
+[PASS] HEAD    headline run table 05_gate_table.csv
+[PASS] HEAD    headline run table 07_circuit_overall.csv
+[PASS] HEAD    headline run table 08_error_attribution.csv
+[PASS] TARGET  gate-level mean accuracy >= 99 % (headline run, 40,000 samples per case)   (99.19 %)
+[PASS] TARGET  test-circuit mean accuracy >= 99 % (headline run, 40,000 samples per case)   (99.38 %)
+[PASS] D10     report section 'Setup'
+[PASS] D10     report section 'Data generation'
+[PASS] D10     report section 'Models'
+[PASS] D10     report section 'Gate results'
+[PASS] D10     report section 'Test-circuit results'
+[PASS] D10     report section 'Error analysis'
+[PASS] D10     report section 'Limitations'
+[PASS] D10     report states model file, nominal VDD, test circuit, simulator version
+[PASS] D10     report headlines the 40,000-sample run and also states the specified 10,000-sample result
+[INFO] gate-level mean accuracy with the specified 10,000 samples per case: 98.36 %
+[INFO] test-circuit mean accuracy with the specified 10,000 samples per case: 98.59 %
+[INFO] report.pdf is up to date with report.md
+
+136/136 checks pass, 0 fail

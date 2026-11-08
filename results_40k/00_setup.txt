@@ -1,0 +1,16 @@
+simulator: ngspice-36 : Circuit level simulation program The U. C. Berkeley CAD Group
+nominal n.vth0 = 0.3558 (matches common.NOM)
+nominal n.toxe = 7.5e-010 (matches common.NOM)
+nominal n.ndep = 8.7e+018 (matches common.NOM)
+nominal n.u0 = 0.0238 (matches common.NOM)
+nominal n.xj = 1e-008 (matches common.NOM)
+nominal p.vth0 = -0.24123 (matches common.NOM)
+nominal p.toxe = 7.7e-010 (matches common.NOM)
+nominal p.ndep = 3.5e+018 (matches common.NOM)
+nominal p.u0 = 0.00306 (matches common.NOM)
+nominal p.xj = 1.008e-008 (matches common.NOM)
+nmos_on: param-model vs original-model max rel diff = 0.00e+00
+nmos_off: param-model vs original-model max rel diff = 0.00e+00
+pmos_on: param-model vs original-model max rel diff = 4.04e-16
+pmos_off: param-model vs original-model max rel diff = 4.95e-15
+Lmin = 32 nm, W in [32,256] nm, VDD nominal 0.9 V (0.81..0.99 V)

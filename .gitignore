@@ -4,3 +4,11 @@ work*/
 *_smoke.md
 slurm_*.out
 .venv/
+.run_all_*.sh
+data_2k5/
+data_5k/
+data_20k/
+saved_models_2k5/
+saved_models_5k/
+saved_models_20k/
+logs/

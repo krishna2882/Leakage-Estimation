@@ -52,5 +52,6 @@ if __name__ == "__main__":
             df[t] = [-r[v] for r in res]              # current INTO the terminal
         df.to_csv(os.path.join(DATA, f"{case}.csv"), index=False)
         print(case, len(df), "rows", f"{time.time()-t0:.0f}s", "redrawn:", tries)
-        # example netlist = first sample
-        open(os.path.join(NETS, f"single_{case}.net"), "w").write(single_netlist(case, df.iloc[0].to_dict()).replace(MODEL, REL_MODEL) + "\n")
+        # example netlist = first sample (main run only: netlists/ is shared by the dataset-size runs)
+        if not TAG:
+            open(os.path.join(NETS, f"single_{case}.net"), "w").write(single_netlist(case, df.iloc[0].to_dict()).replace(MODEL, REL_MODEL) + "\n")

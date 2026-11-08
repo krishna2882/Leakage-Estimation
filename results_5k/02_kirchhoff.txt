@@ -1,0 +1,5 @@
+Kirchhoff check: KCL = id+ig+is+ib ; rel = |KCL| / (|id|+|ig|+|is|+|ib|)
+nmos_on: n=5000  max|KCL|=8.270e-16 A  median|KCL|=7.279e-17 A  max rel=3.091e-05  median rel=6.871e-13  frac(rel<1e-3)=1.0000
+nmos_off: n=5000  max|KCL|=5.493e-22 A  median|KCL|=3.639e-24 A  max rel=2.546e-15  median rel=3.399e-16  frac(rel<1e-3)=1.0000
+pmos_on: n=5000  max|KCL|=1.069e-16 A  median|KCL|=8.079e-18 A  max rel=1.206e-07  median rel=1.765e-13  frac(rel<1e-3)=1.0000
+pmos_off: n=5000  max|KCL|=6.797e-15 A  median|KCL|=3.094e-16 A  max rel=2.388e-05  median rel=2.785e-08  frac(rel<1e-3)=1.0000

@@ -48,6 +48,18 @@ for c, s in [("nmos_on", "n"), ("pmos_on", "p")]:
     y = sweep(c, "toxe", vals, on_over, "ig"); ax[2].semilogy(vals * 1e9, y, "o-", label=c); res[f"{c}_tox"] = y
 ax[2].set(xlabel="toxe (nm)", ylabel="|Ig| ON (A)", title="Gate current vs toxe (SPICE, |Vgs|=VDD, Vds=0)"); ax[2].legend(); ax[2].grid(alpha=.3)
 plt.tight_layout(); plt.savefig(os.path.join(PLOTS, "trends_controlled.png"), dpi=140); plt.close()
+# the three required trend plots, also as separate files
+for key, fname, xl, yl, ttl, cases in [
+        ("T", "trend_off_current_vs_temperature.png", "Temperature (C)", "|Id| OFF (A)", "OFF current vs temperature", ["nmos_off", "pmos_off"]),
+        ("vth", "trend_off_current_vs_vth0.png", "|vth0| (V)", "|Id| OFF (A)", "OFF current vs vth0", ["nmos_off", "pmos_off"]),
+        ("tox", "trend_gate_current_vs_toxe.png", "toxe (nm)", "|Ig| ON (A)", "Gate current vs toxe (|Vgs|=VDD, Vds=0)", ["nmos_on", "pmos_on"])]:
+    fig, a = plt.subplots(figsize=(5.6, 4.3))
+    for c in cases:
+        s = c[0]
+        x = T if key == "T" else (np.abs(NOM[s]["vth0"]) * np.linspace(0.9, 1.1, 9) if key == "vth" else NOM[s]["toxe"] * np.linspace(0.9, 1.1, 9) * 1e9)
+        a.semilogy(x, res[f"{c}_{key}"], "o-", label=c)
+    a.set(xlabel=xl, ylabel=yl, title=ttl + " (SPICE, others nominal)"); a.legend(); a.grid(alpha=.3)
+    plt.tight_layout(); plt.savefig(os.path.join(PLOTS, fname), dpi=140); plt.close()
 
 # monotonicity assertions (physical sanity)
 txt = []

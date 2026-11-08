@@ -19,6 +19,9 @@ PLOTS = os.path.join(ROOT, "plots" + TAG)
 SAVED = os.path.join(ROOT, "saved_models" + TAG)
 NETS = os.path.join(ROOT, "netlists")
 WORK = os.path.join(ROOT, "work" + TAG)
+# headline run of the report: the dataset-size run that meets the 99 % targets (same sampling, same 200 corners);
+# the main run (TAG "") keeps the specified 10,000 samples per case
+HEADLINE, HEADLINE_N = "_40k", 40000
 for _d in (DATA, RES, PLOTS, SAVED, NETS, WORK):
     os.makedirs(_d, exist_ok=True)
 

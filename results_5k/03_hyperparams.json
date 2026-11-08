@@ -1,0 +1,150 @@
+{
+ "('nmos_on', 'poly_ridge')": [
+  {
+   "hp": "{'degree': 2}",
+   "med": 28.953209872184523,
+   "p95": 655.3825477950669
+  },
+  {
+   "hp": "{'degree': 3}",
+   "med": 17.960933234863113,
+   "p95": 237.0751442869595
+  }
+ ],
+ "('nmos_on', 'poly_ridge', 'best')": "{'degree': 3}",
+ "('nmos_on', 'random_forest')": [
+  {
+   "hp": "{'n': 500}",
+   "med": 21.787062215423617,
+   "p95": 164.10486978358622
+  }
+ ],
+ "('nmos_on', 'random_forest', 'best')": "{'n': 500}",
+ "('nmos_on', 'grad_boost')": [
+  {
+   "hp": "{'iters': 4000}",
+   "med": 8.564441570476355,
+   "p95": 58.964259454818006
+  }
+ ],
+ "('nmos_on', 'grad_boost', 'best')": "{'iters': 4000}",
+ "('nmos_on', 'mlp')": [
+  {
+   "hp": "{'width': 128, 'depth': 4, 'epochs': 2000, 'ens': 5}",
+   "med": 0.4920874194084527,
+   "p95": 9.871136227086295
+  }
+ ],
+ "('nmos_on', 'mlp', 'best')": "{'width': 128, 'depth': 4, 'epochs': 2000, 'ens': 5}",
+ "('nmos_off', 'poly_ridge')": [
+  {
+   "hp": "{'degree': 2}",
+   "med": 15.843416925129302,
+   "p95": 170.79044470265663
+  },
+  {
+   "hp": "{'degree': 3}",
+   "med": 11.296971049015141,
+   "p95": 143.4440719054974
+  }
+ ],
+ "('nmos_off', 'poly_ridge', 'best')": "{'degree': 3}",
+ "('nmos_off', 'random_forest')": [
+  {
+   "hp": "{'n': 500}",
+   "med": 18.720354283205282,
+   "p95": 90.39148319972226
+  }
+ ],
+ "('nmos_off', 'random_forest', 'best')": "{'n': 500}",
+ "('nmos_off', 'grad_boost')": [
+  {
+   "hp": "{'iters': 4000}",
+   "med": 5.289073374705873,
+   "p95": 45.80902282387535
+  }
+ ],
+ "('nmos_off', 'grad_boost', 'best')": "{'iters': 4000}",
+ "('nmos_off', 'mlp')": [
+  {
+   "hp": "{'width': 128, 'depth': 4, 'epochs': 2000, 'ens': 5}",
+   "med": 0.4255597002165215,
+   "p95": 5.14831177009416
+  }
+ ],
+ "('nmos_off', 'mlp', 'best')": "{'width': 128, 'depth': 4, 'epochs': 2000, 'ens': 5}",
+ "('pmos_on', 'poly_ridge')": [
+  {
+   "hp": "{'degree': 2}",
+   "med": 25.30760100270153,
+   "p95": 497.272415001194
+  },
+  {
+   "hp": "{'degree': 3}",
+   "med": 16.080689477107512,
+   "p95": 213.98107519121783
+  }
+ ],
+ "('pmos_on', 'poly_ridge', 'best')": "{'degree': 3}",
+ "('pmos_on', 'random_forest')": [
+  {
+   "hp": "{'n': 500}",
+   "med": 21.59028123882132,
+   "p95": 180.21308531324678
+  }
+ ],
+ "('pmos_on', 'random_forest', 'best')": "{'n': 500}",
+ "('pmos_on', 'grad_boost')": [
+  {
+   "hp": "{'iters': 4000}",
+   "med": 8.705762314715722,
+   "p95": 64.98286434533375
+  }
+ ],
+ "('pmos_on', 'grad_boost', 'best')": "{'iters': 4000}",
+ "('pmos_on', 'mlp')": [
+  {
+   "hp": "{'width': 128, 'depth': 4, 'epochs': 2000, 'ens': 5}",
+   "med": 0.43660065545999716,
+   "p95": 10.960700122425639
+  }
+ ],
+ "('pmos_on', 'mlp', 'best')": "{'width': 128, 'depth': 4, 'epochs': 2000, 'ens': 5}",
+ "('pmos_off', 'poly_ridge')": [
+  {
+   "hp": "{'degree': 2}",
+   "med": 18.60802288795355,
+   "p95": 181.92543874323957
+  },
+  {
+   "hp": "{'degree': 3}",
+   "med": 13.240565530409002,
+   "p95": 133.1491602431564
+  }
+ ],
+ "('pmos_off', 'poly_ridge', 'best')": "{'degree': 3}",
+ "('pmos_off', 'random_forest')": [
+  {
+   "hp": "{'n': 500}",
+   "med": 18.15318741463458,
+   "p95": 90.23472472810239
+  }
+ ],
+ "('pmos_off', 'random_forest', 'best')": "{'n': 500}",
+ "('pmos_off', 'grad_boost')": [
+  {
+   "hp": "{'iters': 4000}",
+   "med": 5.4043853178103465,
+   "p95": 43.34400155697207
+  }
+ ],
+ "('pmos_off', 'grad_boost', 'best')": "{'iters': 4000}",
+ "('pmos_off', 'mlp')": [
+  {
+   "hp": "{'width': 128, 'depth': 4, 'epochs': 2000, 'ens': 5}",
+   "med": 1.3413392188437938,
+   "p95": 17.467172321370413
+  }
+ ],
+ "('pmos_off', 'mlp', 'best')": "{'width': 128, 'depth': 4, 'epochs': 2000, 'ens': 5}"
+}
