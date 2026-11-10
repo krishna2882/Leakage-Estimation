@@ -77,6 +77,7 @@ Controlled sweeps (one parameter varied, all others nominal):
   validation (median + 95th percentile) of the pooled relative error. Relative error = |dI| / max(|I_SPICE|, 1 fA).
 
 ### Model comparison (validation set, pooled over Id, Ig, Is, Ib)
+R2 is computed per terminal on asinh(I / I0_t), I0_t = 1 % of the median |I_t| of the evaluated set (the transform of the training target), and averaged over Id, Ig, Is and Ib; median and p95 are of the pooled relative error. The lowest R2 of a chosen model, pmos_off 0.926, comes from its ib (R2 0.710; the other terminals 0.9970 or higher); inside the gates its ib term carries 1.4e-07 % of the pmos_off leakage power.
 | model | nmos_on R2 | nmos_on median % | nmos_on p95 % | nmos_off R2 | nmos_off median % | nmos_off p95 % | pmos_on R2 | pmos_on median % | pmos_on p95 % | pmos_off R2 | pmos_off median % | pmos_off p95 % |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | poly_ridge | 0.991 | 16.48 | 252.9 | 0.9431 | 11.15 | 129.3 | 0.9917 | 13.99 | 189.1 | 0.8921 | 12.08 | 116.7 |
@@ -141,6 +142,32 @@ Overall: mean accuracy **98.36 %**, median error 1.09 %, 95th percentile 5.24 %,
 bias -0.31 % (n = 3600).
 Most accurate case: NAND2 00 (median error 0.702 %); least accurate: NOR2 10
 (2.34 %).
+
+Why: the ranking of the gate cases mostly follows how much of the gate's leakage flows through OFF PMOS devices, the device case with the largest error inside the gates (median device power error at the gate bias points: OFF PMOS 4.7 %, ON devices 1.0 %). Splitting each gate's leakage power over its transistors (single-FET SPICE reruns at every bias point in the gate) gives a Spearman rank correlation of 0.85 between that share and the gate median error over the 18 cases. Inside the gates the ON transistors sit at |Vds| ~ 0, so 97 % of their leakage power is gate tunnelling ((Vg - Vs) Ig), while 99.7 % of the OFF-PMOS power is the drain term (Vd - Vs) Id. Most accurate, NAND2 00: 79 % of its leakage flows through ON devices (it has no OFF PMOS). Least accurate, NOR2 10: 69 % flows through OFF PMOS; the error contributed by the OFF PMOS alone has a median of 2.13 %, against a gate median error of 2.34 %.
+
+Per case: share of the leakage through OFF PMOS (median over corners) and the device case contributing the largest error:
+
+| gate | pattern | median_err_pct | pmos_off_share_pct | largest_error_from |
+|---|---|---|---|---|
+| NAND2 | 00 | 0.702 | 0 | pmos_on (0.62 %) |
+| NAND2 | 10 | 0.749 | 0 | nmos_on (0.35 %) |
+| OR2 | 11 | 0.756 | 21.2 | pmos_off (0.39 %) |
+| NAND2 | 01 | 0.773 | 0 | nmos_off (0.60 %) |
+| AND2 | 00 | 0.86 | 31.3 | pmos_off (0.76 %) |
+| OR2 | 00 | 0.884 | 18.7 | pmos_on (0.53 %) |
+| INV | 0 | 0.924 | 0 | nmos_off (0.54 %) |
+| NOR2 | 00 | 0.989 | 0 | pmos_on (0.77 %) |
+| AND2 | 01 | 1.01 | 24.6 | pmos_off (0.62 %) |
+| AND2 | 11 | 1.11 | 42.9 | pmos_off (0.96 %) |
+| AND2 | 10 | 1.12 | 34.4 | pmos_off (0.94 %) |
+| NOR2 | 11 | 1.15 | 45.5 | pmos_off (0.77 %) |
+| NAND2 | 11 | 1.48 | 58.2 | pmos_off (1.29 %) |
+| OR2 | 01 | 1.49 | 39.8 | pmos_off (1.58 %) |
+| OR2 | 10 | 1.52 | 38.6 | pmos_off (1.21 %) |
+| NOR2 | 01 | 1.78 | 51.6 | pmos_off (2.07 %) |
+| INV | 1 | 1.9 | 75.2 | pmos_off (1.80 %) |
+| NOR2 | 10 | 2.34 | 69.1 | pmos_off (2.13 %) |
+
 ![gate parity](plots/gate_parity.png)
 
 **Extra (not required): ML-only node voltages.** Instead of reading x, y and the INV input of AND2/OR2 from SPICE, the
@@ -254,7 +281,7 @@ reason the specified 10,000-sample results are reported alongside.
 Overall: mean accuracy **99.19 %**, median error 0.53 %, 95th percentile 2.55 %,
 bias +0.28 % (n = 3600); with the specified 10,000 samples per case: 98.36 %, 1.09 %,
 5.24 %. Most accurate case: NAND2 00 (median error 0.323 %); least accurate:
-INV 1 (0.822 %).
+INV 1 (0.822 %). Why: the ranking of the gate cases mostly follows how much of the gate's leakage flows through OFF PMOS devices, the device case with the largest error inside the gates (median device power error at the gate bias points: OFF PMOS 1.6 %, ON devices 0.6 %). Splitting each gate's leakage power over its transistors (single-FET SPICE reruns at every bias point in the gate) gives a Spearman rank correlation of 0.88 between that share and the gate median error over the 18 cases. Inside the gates the ON transistors sit at |Vds| ~ 0, so 97 % of their leakage power is gate tunnelling ((Vg - Vs) Ig), while 99.7 % of the OFF-PMOS power is the drain term (Vd - Vs) Id. Most accurate, NAND2 00: 79 % of its leakage flows through ON devices (it has no OFF PMOS). Least accurate, INV 1: 75 % flows through OFF PMOS; the error contributed by the OFF PMOS alone has a median of 0.87 %, against a gate median error of 0.82 % (the device errors partly cancel).
 With ML-solved internal node voltages (extra, as in section 4): 99.13 % mean accuracy.
 ![gate parity, 40,000 samples](plots_40k/gate_parity.png)
 
@@ -311,7 +338,7 @@ the one that limits the gate accuracy. Inside gates, Vd and Vs sit at the rails 
 Vd-Vs training square, where the training data is thinnest; device errors at these bias points are larger than on the random test set.
 
 ### Why pmos_off is the weakest device model
-Inside the gates every OFF PMOS has Vs = Vg = Vb = VDD, so only (Vd - Vs) Id enters the leakage; that corner (Vs > 0.95 VDD) holds
+Inside the gates the OFF PMOS have Vg and Vb at VDD (Vg within 3.2 mV) and Vs > 0.95 VDD in 90 % of the cases (the exception is the series PMOS of NOR2/OR2, whose source is the internal node y, down to 0.91 VDD); (Vd - Vs) Id carries 99.7 % of their leakage power. The corner Vs > 0.95 VDD holds
 about 5 % of the uniform training data (`experiments/exp8_pmos_off_diag.py`). Variants trained on the same 10k data and split, scored
 on validation and on the independent rail-bias set (`corner` = Vs > 0.95 VDD; the gate test corners are not used); errors in %:
 

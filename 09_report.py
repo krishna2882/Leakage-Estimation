@@ -58,6 +58,66 @@ hp_txt = lambda t: " or ".join(sorted({re.sub(r"[{}']", "", h["hp"]).replace(":"
                                        if not k.endswith("'best')") and f"'{t}'" in k for h in v}))
 tuned_note = "; ".join([f"{t}: {hp_txt(t)}, the better on validation per case" for t in tuned] +
                        [f"{', '.join(fixed)}: one fixed setting each (`results/03_hyperparams.json`)"])
+TERM_V = {"id": "vd", "ig": "vg", "ib": "vb"}           # power term of each terminal: (V_t - Vs) I_t
+# R2 definition, and which terminal pulls the lowest R2 of the chosen models down
+r2v = lm[(lm.split == "val") & lm.terminal.isin(TARGETS)]
+r2v = r2v[r2v.apply(lambda r: r.model == ch[r.case], axis=1)].pivot(index="case", columns="terminal", values="r2")
+lo_c = r2v.mean(axis=1).idxmin(); lo_t = r2v.loc[lo_c].idxmin()
+r2_note = (f"R2 is computed per terminal on asinh(I / I0_t), I0_t = 1 % of the median |I_t| of the evaluated set (the transform of the training target), and averaged over Id, Ig, Is and Ib; median and "
+           f"p95 are of the pooled relative error. The lowest R2 of a chosen model, {lo_c} {r2v.loc[lo_c].mean():.3f}, comes from its "
+           f"{lo_t} (R2 {r2v.loc[lo_c, lo_t]:.3f}; the other terminals {r2v.loc[lo_c].drop(lo_t).min():.4f} or higher)")
+_f8 = os.path.join(RES, "08_device_error_at_gate_bias.csv")
+if lo_t in TERM_V and os.path.exists(_f8):
+    _d = pd.read_csv(_f8); _d = _d[_d.case == lo_c]
+    _s = ((_d[TERM_V[lo_t]] - _d.vs) * _d[f"{lo_t}_spice"]).abs().sum() / _d.p_spice.abs().sum() * 100
+    r2_note += f"; inside the gates its {lo_t} term carries {_s:.2g} % of the {lo_c} leakage power"
+r2_note += "."
+
+
+def why_cases(res_dir, table):
+    """why the most / least accurate gate cases differ: split of each gate's leakage power over its transistors by device
+    case, from the single-FET SPICE reruns at every bias point inside the gates (08_device_error_at_gate_bias.csv)"""
+    f = os.path.join(res_dir, "08_device_error_at_gate_bias.csv")
+    if not os.path.exists(f):
+        return "", None
+    from scipy.stats import spearmanr
+    d = pd.read_csv(f, dtype={"pattern": str})
+    k = ["gate", "pattern", "corner"]
+    d["share"] = d.p_spice / d.groupby(k).p_spice.transform("sum") * 100
+    d["err"] = (d.p_ml - d.p_spice) / d.groupby(k).p_spice.transform("sum") * 100
+    c = d.groupby(k + ["case"]).agg(share=("share", "sum"), err=("err", "sum")).reset_index()
+    c = c.groupby(["gate", "pattern", "case"]).agg(share=("share", "median"),
+                                                   err=("err", lambda x: x.abs().median())).reset_index()
+    t = table.set_index(["gate", "pattern"])
+    poff = c[c.case == "pmos_off"].set_index(["gate", "pattern"]).share.reindex(t.index).fillna(0)
+    top = c.loc[c.groupby(["gate", "pattern"]).err.idxmax()].set_index(["gate", "pattern"]).reindex(t.index)
+    on = d[d.case.str.endswith("_on")]; off = d[d.case == "pmos_off"]
+    tab = pd.DataFrame({"gate": [g for g, _ in t.index], "pattern": [p for _, p in t.index],
+                        "median_err_pct": t.median_err_pct.values, "pmos_off_share_pct": poff.values.round(1),
+                        "largest_error_from": [f"{a} ({b:.2f} %)" for a, b in zip(top.case, top.err)]})
+    tab = tab.sort_values("median_err_pct")
+    b, w = tab.iloc[0], tab.iloc[-1]
+    bon = c[(c.gate == b.gate) & (c.pattern == b.pattern) & c.case.str.endswith("_on")].share.sum()
+    wpe = c[(c.gate == w.gate) & (c.pattern == w.pattern) & (c.case == "pmos_off")].err
+    rho = spearmanr(poff.values, t.median_err_pct.values)[0]          # unrounded shares
+    rel = lambda x: (x.p_ml - x.p_spice).abs().div(x.p_spice.abs()).median() * 100
+    has_off = (d[(d.gate == b.gate) & (d.pattern == b.pattern)].case == "pmos_off").any()
+    txt = (f"Why: the ranking of the gate cases mostly follows how much of the gate's leakage flows through OFF PMOS devices, the "
+           f"device case with the largest error inside the gates (median device power error at the gate bias points: OFF PMOS "
+           f"{rel(off):.1f} %, ON devices {rel(on):.1f} %). Splitting each gate's leakage power over its transistors (single-FET SPICE "
+           f"reruns at every bias point in the gate) gives a Spearman rank correlation of {rho:.2f} between that share and the gate "
+           f"median error over the 18 cases. Inside the gates the ON transistors sit at |Vds| ~ 0, so "
+           f"{100 * ((on.vg - on.vs) * on.ig_spice).sum() / on.p_spice.sum():.0f} % of their leakage power is gate tunnelling "
+           f"((Vg - Vs) Ig), while "
+           f"{100 * ((off.vd - off.vs) * off.id_spice).sum() / off.p_spice.sum():.1f} % of the OFF-PMOS power is the drain term "
+           f"(Vd - Vs) Id. Most accurate, {b.gate} {b.pattern}: {bon:.0f} % of its leakage flows through ON devices" +
+           (f" and {b.pmos_off_share_pct:.0f} % through OFF PMOS. " if has_off else " (it has no OFF PMOS). ") + f"Least accurate, {w.gate} {w.pattern}: {w.pmos_off_share_pct:.0f} % flows "
+           f"through OFF PMOS" + (f"; the error contributed by the OFF PMOS alone has a median of {wpe.iloc[0]:.2f} %, against a gate "
+                                   f"median error of {w.median_err_pct:.2f} %" + (" (the device errors partly cancel)." if wpe.iloc[0] > w.median_err_pct else ".")
+                                   if len(wpe) else "."))
+    return txt, tab
+
+
 e7 = [os.path.join(ROOT, "experiments", "out", f"exp7_{c}.csv") for c in CASES]
 feat_note = ""
 if all(os.path.exists(f) for f in e7):
@@ -195,6 +255,7 @@ Controlled sweeps (one parameter varied, all others nominal):
   validation (median + 95th percentile) of the pooled relative error. Relative error = |dI| / max(|I_SPICE|, 1 fA).
 
 ### Model comparison (validation set, pooled over Id, Ig, Is, Ib)
+{r2_note}
 {md(cmp_val)}
 
 ### Chosen models (test set)
@@ -223,6 +284,13 @@ Overall: mean accuracy **{go.mean_accuracy_pct:.2f} %**, median error {go.median
 bias {go.bias_pct:+.2f} % (n = {int(go.n)}).
 Most accurate case: {best.gate} {best.pattern} (median error {best.median_err_pct:.3g} %); least accurate: {worst.gate} {worst.pattern}
 ({worst.median_err_pct:.3g} %).
+""" + (lambda w: "" if w[1] is None else f"""
+{w[0]}
+
+Per case: share of the leakage through OFF PMOS (median over corners) and the device case contributing the largest error:
+
+{md(w[1], "{:.3g}")}
+""")(why_cases(RES, gt)) + f"""
 ![gate parity](plots/gate_parity.png)
 """]
 if sc is not None:
@@ -276,7 +344,7 @@ reason the specified 10,000-sample results are reported alongside.
 Overall: mean accuracy **{hg.mean_accuracy_pct:.2f} %**, median error {hg.median_err_pct:.2f} %, 95th percentile {hg.p95_err_pct:.2f} %,
 bias {hg.bias_pct:+.2f} % (n = {int(hg.n)}); with the specified 10,000 samples per case: {go.mean_accuracy_pct:.2f} %, {go.median_err_pct:.2f} %,
 {go.p95_err_pct:.2f} %. Most accurate case: {hb.gate} {hb.pattern} (median error {hb.median_err_pct:.3g} %); least accurate:
-{hw_.gate} {hw_.pattern} ({hw_.median_err_pct:.3g} %).""" + (f"""
+{hw_.gate} {hw_.pattern} ({hw_.median_err_pct:.3g} %). """ + why_cases(os.path.join(ROOT, "results" + HEADLINE), h_gt)[0] + (f"""
 With ML-solved internal node voltages (extra, as in section 4): {h_sc.iloc[0].mean_accuracy_pct:.2f} % mean accuracy.""" if h_sc is not None else "") + f"""
 ![gate parity, {hn} samples](plots{HEADLINE}/gate_parity.png)
 
@@ -319,8 +387,15 @@ if pv is not None:
     def better(k):
         w = b[b[k] < base[k]][k].sort_values()
         return ", ".join(f"{i} {v:.3f} %" for i, v in w.items()) or "none"
+    bias_txt = "Inside the gates the OFF PMOS sit near Vs = Vg = Vb = VDD"
+    if os.path.exists(_f8):
+        _o = pd.read_csv(_f8); _o = _o[_o.case == "pmos_off"]
+        bias_txt = (f"Inside the gates the OFF PMOS have Vg and Vb at VDD (Vg within {1e3 * (_o.vg - _o.vdd).abs().max():.1f} mV) and "
+                    f"Vs > 0.95 VDD in {100 * (_o.vs > 0.95 * _o.vdd).mean():.0f} % of the cases (the exception is the series PMOS of "
+                    f"NOR2/OR2, whose source is the internal node y, down to {(_o.vs / _o.vdd).min():.2f} VDD); "
+                    f"(Vd - Vs) Id carries {100 * ((_o.vd - _o.vs) * _o.id_spice).sum() / _o.p_spice.sum():.1f} % of their leakage power")
     A.append(f"""### Why pmos_off is the weakest device model
-Inside the gates every OFF PMOS has Vs = Vg = Vb = VDD, so only (Vd - Vs) Id enters the leakage; that corner (Vs > 0.95 VDD) holds
+{bias_txt}. The corner Vs > 0.95 VDD holds
 about 5 % of the uniform training data (`experiments/exp8_pmos_off_diag.py`). Variants trained on the same 10k data and split, scored
 on validation and on the independent rail-bias set (`corner` = Vs > 0.95 VDD; the gate test corners are not used); errors in %:
 
